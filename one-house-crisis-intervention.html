@@ -198,14 +198,17 @@
   }
 
   .slide-logo {
-    display: block;
-    height: 28px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 24px;
     width: auto;
-    margin: 0 auto 20px;
-    opacity: 0.5;
+    opacity: 0.45;
+    pointer-events: none;
   }
   .slide.dark .slide-logo {
-    opacity: 0.4;
+    opacity: 0.35;
   }
 
   /* ── Typography ── */
@@ -887,7 +890,7 @@
       overflow-y: auto;
     }
     .slide-inner { max-width: 100%; }
-    .slide-logo { height: 22px; margin-bottom: 16px; }
+    .slide-logo { height: 20px; top: 18px; }
 
     /* All grids → single column */
     .card-grid.cols-2,
@@ -1502,17 +1505,15 @@
 
 <script>
 (function() {
-  // Inject slide header logos
+  // Inject slide header logos (absolutely positioned within each slide)
   document.querySelectorAll('.slide').forEach(function(slide) {
-    var inner = slide.querySelector('.slide-inner');
-    if (!inner) return;
     if (slide.dataset.title === 'Raise Your Hand') return;
     var isDark = slide.classList.contains('dark');
     var img = document.createElement('img');
     img.src = 'assets/brand/' + (isDark ? 'logo-white.svg' : 'logo-color.svg');
     img.alt = 'The One House Project';
     img.className = 'slide-logo';
-    inner.insertBefore(img, inner.firstChild);
+    slide.appendChild(img);
   });
 
   const slides = document.querySelectorAll('.slide');
