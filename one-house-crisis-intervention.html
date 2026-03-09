@@ -900,13 +900,36 @@
     .steps { flex-direction: column; }
     .step { flex: none; }
 
-    /* Continuum: allow horizontal scroll */
+    /* Continuum: vertical layout on mobile */
     .continuum {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding-left: 28px;
+      margin-top: 28px;
     }
-    .stage-node { min-width: 120px; }
+    .continuum::before {
+      top: 0;
+      bottom: 0;
+      left: 18px;
+      right: auto;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--orange), var(--pink), var(--green), var(--blue));
+      transform: none;
+    }
+    .stage-node {
+      text-align: left;
+      padding: 14px 0 14px 24px;
+      min-width: unset;
+    }
+    .stage-dot {
+      position: absolute;
+      left: -28px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+    }
 
     /* Opportunity arrow: rotate for vertical flow */
     .opp-arrow { transform: rotate(90deg); margin: 0 auto; }
