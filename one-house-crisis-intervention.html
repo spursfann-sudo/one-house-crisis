@@ -801,6 +801,9 @@
   @media (max-width: 768px) {
     :root { --sidebar-w: 0px; }
 
+    body { height: 100dvh; }
+    #slides-container { height: 100dvh; }
+
     /* Sidebar: collapse off-screen */
     #sidebar {
       transform: translateX(-100%);
@@ -841,7 +844,7 @@
 
     /* Slide layout */
     .slide {
-      padding: 70px 20px 24px;
+      padding: 70px 20px calc(24px + env(safe-area-inset-bottom));
       align-items: flex-start;
       overflow-y: auto;
     }
