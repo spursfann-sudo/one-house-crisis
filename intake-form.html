@@ -39,15 +39,21 @@
     width: auto;
   }
 
-  .page-header a {
+  .back-btn {
     font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    font-weight: 600;
-    color: rgba(242,249,255,0.6);
+    font-weight: 700;
+    color: var(--dark);
+    background: var(--orange);
+    padding: 8px 18px;
+    border-radius: 8px;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: background 0.2s, transform 0.2s;
   }
-  .page-header a:hover { color: var(--white); }
+  .back-btn:hover {
+    background: #e99d3a;
+    transform: translateY(-1px);
+  }
 
   .form-container {
     max-width: 680px;
@@ -221,6 +227,41 @@
     line-height: 1.5;
   }
 
+  /* Validation feedback — only after user interaction */
+  form.submitted input:invalid,
+  form.submitted select:invalid,
+  form.submitted textarea:invalid {
+    border-color: #e55;
+  }
+  .field-error {
+    font-size: 11px;
+    color: #e55;
+    margin-top: 4px;
+    display: none;
+  }
+  form.submitted .field-error.visible {
+    display: block;
+  }
+
+  /* Budget input with $ prefix */
+  .budget-wrap {
+    position: relative;
+  }
+  .budget-wrap::before {
+    content: '$';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: var(--grey);
+    pointer-events: none;
+  }
+  .budget-wrap input {
+    padding-left: 28px;
+  }
+
   .divider {
     width: 48px;
     height: 3px;
@@ -247,8 +288,8 @@
 <body>
 
 <div class="page-header">
-  <img src="assets/brand/logo-color.svg" alt="The One House Project">
-  <a href="one-house-crisis-intervention.html">&larr; Back to presentation</a>
+  <img src="assets/brand/logo-white.svg" alt="The One House Project">
+  <a href="one-house-crisis-intervention.html" class="back-btn">&larr; Back to Presentation</a>
 </div>
 
 <div class="form-container">
@@ -263,11 +304,11 @@
       <span class="form-section-label">Organization</span>
       <div class="field-group">
         <label for="org-name">Organization Name</label>
-        <input type="text" id="org-name" name="org-name" placeholder="e.g., Grace Community Church">
+        <input type="text" id="org-name" name="org-name" placeholder="e.g., Grace Community Church" required>
       </div>
       <div class="field-group">
         <label for="org-type">Organization Type</label>
-        <select id="org-type" name="org-type">
+        <select id="org-type" name="org-type" required>
           <option value="" disabled selected>Select one...</option>
           <option value="church">Church</option>
           <option value="nonprofit">Nonprofit</option>
@@ -279,11 +320,30 @@
       <div class="field-row">
         <div class="field-group">
           <label for="city">City</label>
-          <input type="text" id="city" name="city" placeholder="e.g., Huntsville">
+          <input type="text" id="city" name="city" placeholder="e.g., Huntsville" required>
         </div>
         <div class="field-group">
           <label for="state">State</label>
-          <input type="text" id="state" name="state" placeholder="e.g., AL">
+          <select id="state" name="state" required>
+            <option value="" disabled selected>State...</option>
+            <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option>
+            <option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option>
+            <option value="CT">CT</option><option value="DE">DE</option><option value="DC">DC</option>
+            <option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option>
+            <option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option>
+            <option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option>
+            <option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option>
+            <option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option>
+            <option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option>
+            <option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option>
+            <option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option>
+            <option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option>
+            <option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option>
+            <option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option>
+            <option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option>
+            <option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option>
+            <option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
+          </select>
         </div>
       </div>
     </div>
@@ -293,16 +353,16 @@
       <span class="form-section-label">Contact</span>
       <div class="field-group">
         <label for="contact-name">Your Name</label>
-        <input type="text" id="contact-name" name="contact-name" placeholder="First and last name">
+        <input type="text" id="contact-name" name="contact-name" placeholder="First and last name" required>
       </div>
       <div class="field-row">
         <div class="field-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com">
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
         </div>
         <div class="field-group">
           <label for="phone">Phone (optional)</label>
-          <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555">
+          <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" pattern="\(\d{3}\) \d{3}-\d{4}" title="Phone format: (555) 555-5555">
         </div>
       </div>
     </div>
@@ -399,7 +459,7 @@
       <span class="form-section-label">Population</span>
       <div class="field-group">
         <label for="population">Who would you like to serve?</label>
-        <textarea id="population" name="population" placeholder="e.g., Single mothers, veterans, men in addiction recovery, families with children..."></textarea>
+        <textarea id="population" name="population" placeholder="e.g., Single mothers, veterans, men in addiction recovery, families with children..." required></textarea>
         <p class="helper-text">Each house serves one population. If you are not sure, that is okay — we will help you choose.</p>
       </div>
     </div>
@@ -407,10 +467,65 @@
     <!-- Resources -->
     <div class="form-section">
       <span class="form-section-label">Your Resources</span>
+      <p class="helper-text" style="margin-bottom: 12px;">Help us understand what you bring to the table so we can find the right match.</p>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="budget">Monthly Budget</label>
+          <div class="budget-wrap">
+            <input type="text" id="budget" name="budget" placeholder="e.g., 3,000" required>
+          </div>
+          <p class="helper-text">Approximate monthly funding available.</p>
+        </div>
+        <div class="field-group">
+          <label for="existing-property">Existing Property</label>
+          <select id="existing-property" name="existing-property" required>
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group" id="address-group" style="display: none;">
+        <label for="property-address">Property Address</label>
+        <input type="text" id="property-address" name="property-address" placeholder="Full street address, city, state, zip">
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="licensed-sw">Licensed Social Worker on Staff</label>
+          <select id="licensed-sw" name="licensed-sw" required>
+            <option value="" disabled selected>Select...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="volunteers">Available Volunteers</label>
+          <select id="volunteers" name="volunteers" required>
+            <option value="" disabled selected>Select...</option>
+            <option value="none">None</option>
+            <option value="1-5">1 – 5</option>
+            <option value="6-15">6 – 15</option>
+            <option value="16+">16+</option>
+          </select>
+        </div>
+      </div>
+
       <div class="field-group">
-        <label for="resources">What do you bring to the table?</label>
-        <textarea id="resources" name="resources" placeholder="e.g., We have a 4-bedroom property available, $3k/month budget for benevolence, two licensed counselors on staff..."></textarea>
-        <p class="helper-text">Funding, property, staff, volunteers, clinical expertise, community connections — anything helps us understand how to match you.</p>
+        <label for="community-partnerships">Existing Community Partnerships</label>
+        <select id="community-partnerships" name="community-partnerships" required>
+          <option value="" disabled selected>Select...</option>
+          <option value="yes">Yes — we have relationships with local agencies, churches, or organizations</option>
+          <option value="no">No — but we are open to building them</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="resources-other">Anything else you bring to the table?</label>
+        <textarea id="resources-other" name="resources-other" placeholder="e.g., Clinical expertise, community connections, building trades experience, grant-writing capacity..."></textarea>
+        <p class="helper-text">Anything not covered above — staff skills, equipment, partnerships, etc.</p>
       </div>
     </div>
 
@@ -431,6 +546,38 @@
 
   </form>
 </div>
+
+<script>
+(function() {
+  // Phone auto-format: (###) ###-####
+  var phone = document.getElementById('phone');
+  phone.addEventListener('input', function(e) {
+    var v = e.target.value.replace(/\D/g, '').substring(0, 10);
+    if (v.length >= 6) v = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6);
+    else if (v.length >= 3) v = '(' + v.substring(0,3) + ') ' + v.substring(3);
+    e.target.value = v;
+  });
+
+  // Conditional address field
+  var propSelect = document.getElementById('existing-property');
+  var addrGroup = document.getElementById('address-group');
+  var addrInput = document.getElementById('property-address');
+  propSelect.addEventListener('change', function() {
+    var show = this.value === 'yes';
+    addrGroup.style.display = show ? 'block' : 'none';
+    addrInput.required = show;
+    if (!show) addrInput.value = '';
+  });
+
+  // Add 'submitted' class on submit for validation styling
+  document.getElementById('intake-form').addEventListener('submit', function(e) {
+    this.classList.add('submitted');
+    if (!this.checkValidity()) {
+      e.preventDefault();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
