@@ -574,7 +574,7 @@
     flex-wrap: wrap;
   }
 
-  .cta-links span {
+  .cta-links a {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 14px;
@@ -583,6 +583,12 @@
     border: 2px solid rgba(255,255,255,0.35);
     border-radius: 10px;
     letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .cta-links a:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.55);
   }
 
   /* ── Highlight callout ── */
@@ -795,6 +801,7 @@
 
   /* ── Desktop defaults for mobile-only elements ── */
   #hamburger { display: none; }
+  #mobile-logo { display: none; }
   #sidebar-overlay { display: none; }
 
   /* ── Mobile Responsive ── */
@@ -845,6 +852,21 @@
       border-radius: 10px;
       cursor: pointer;
       box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Mobile logo beside hamburger */
+    #mobile-logo {
+      display: block;
+      position: fixed;
+      top: 20px;
+      left: 64px;
+      z-index: 250;
+      height: 24px;
+    }
+    #mobile-logo img {
+      height: 24px;
+      width: auto;
+      display: block;
     }
 
     /* Slide layout */
@@ -916,7 +938,7 @@
     .cta-box { padding: 28px 20px; }
     .cta-button { padding: 14px 28px; font-size: 14px; }
     .cta-links { gap: 12px; }
-    .cta-links span { font-size: 12px; padding: 8px 14px; }
+    .cta-links a { font-size: 12px; padding: 8px 14px; }
 
     /* Card padding */
     .card { padding: 20px 18px; }
@@ -932,6 +954,9 @@
     <path d="M1 1h20M1 9h20M1 17h20" stroke="#252C36" stroke-width="2" stroke-linecap="round"/>
   </svg>
 </button>
+<a href="index.html" id="mobile-logo">
+  <img src="assets/brand/logo-white.svg" alt="The One House Project">
+</a>
 
 <!-- Sidebar -->
 <div id="sidebar">
@@ -1430,10 +1455,10 @@
         <a href="intake-form.html" class="cta-button">Become a Partner</a>
       </div>
 
-      <div class="cta-links anim anim-d5" style="opacity: 0.6;">
-        <span>theonehouseproject.com</span>
-        <span>@theonehouseproject</span>
-        <span>givebutter.com/one-house</span>
+      <div class="cta-links anim anim-d5">
+        <a href="https://theonehouseproject.com" target="_blank">Website</a>
+        <a href="https://instagram.com/theonehouseproject" target="_blank">Follow Us</a>
+        <a href="https://givebutter.com/one-house" target="_blank">Donate Now</a>
       </div>
     </div>
   </div>
