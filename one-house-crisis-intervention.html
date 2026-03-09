@@ -809,9 +809,14 @@
       transform: translateX(-100%);
       width: 260px;
       z-index: 200;
+      height: 100dvh;
+      padding-top: 68px;
     }
     #sidebar.open {
       transform: translateX(0);
+    }
+    #sidebar .sidebar-footer {
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     /* Overlay behind sidebar */
