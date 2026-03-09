@@ -792,9 +792,134 @@
   .slide.active .anim-d4 { animation-delay: 0.4s; }
   .slide.active .anim-d5 { animation-delay: 0.5s; }
   .slide.active .anim-d6 { animation-delay: 0.6s; }
+
+  /* ── Desktop defaults for mobile-only elements ── */
+  #hamburger { display: none; }
+  #sidebar-overlay { display: none; }
+
+  /* ── Mobile Responsive ── */
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+
+    /* Sidebar: collapse off-screen */
+    #sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+      z-index: 200;
+    }
+    #sidebar.open {
+      transform: translateX(0);
+    }
+
+    /* Overlay behind sidebar */
+    #sidebar-overlay.visible {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 150;
+    }
+
+    /* Hamburger toggle */
+    #hamburger {
+      display: flex;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 250;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Slide layout */
+    .slide { padding: 24px 20px; }
+    .slide-inner { max-width: 100%; }
+
+    /* All grids → single column */
+    .card-grid.cols-2,
+    .card-grid.cols-3,
+    .card-grid.cols-4,
+    .team-grid,
+    .partner-hub,
+    .stage-detail-grid,
+    .provides-grid,
+    .opportunity-visual {
+      grid-template-columns: 1fr;
+    }
+
+    /* Override inline-style grids */
+    .mobile-collapse {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Flex layouts: stack */
+    .stat-row { flex-wrap: wrap; gap: 20px; }
+    .stat-block { flex: 1 1 100%; }
+    .steps { flex-direction: column; }
+    .step { flex: none; }
+
+    /* Continuum: allow horizontal scroll */
+    .continuum {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+    .stage-node { min-width: 120px; }
+
+    /* Opportunity arrow: rotate for vertical flow */
+    .opp-arrow { transform: rotate(90deg); margin: 0 auto; }
+
+    /* Revenue bars */
+    .revenue-bars { height: 120px; }
+
+    /* Font sizes: smaller minimums */
+    h1 { font-size: clamp(26px, 6vw, 36px); }
+    h2 { font-size: clamp(22px, 5vw, 28px); }
+    h3 { font-size: clamp(16px, 3.5vw, 20px); }
+    p, li { font-size: clamp(14px, 3vw, 16px); }
+    .subtitle { font-size: clamp(14px, 3vw, 17px); }
+    .title-slide-content h1 { font-size: clamp(28px, 7vw, 40px); }
+    .stat-block .big-number { font-size: clamp(36px, 10vw, 52px); }
+
+    /* Counter: reposition */
+    #counter {
+      top: 18px;
+      right: 16px;
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+
+    /* Hide keyboard hint on touch devices */
+    #keyboard-hint { display: none; }
+
+    /* CTA adjustments */
+    .cta-box { padding: 28px 20px; }
+    .cta-button { padding: 14px 28px; font-size: 14px; }
+    .cta-links { gap: 12px; }
+    .cta-links span { font-size: 12px; padding: 8px 14px; }
+
+    /* Card padding */
+    .card { padding: 20px 18px; }
+    .partner-card { padding: 20px 18px; }
+    .stage-detail-card { padding: 22px 20px; }
+  }
 </style>
 </head>
 <body>
+
+<button id="hamburger" aria-label="Toggle navigation">
+  <svg width="22" height="18" viewBox="0 0 22 18" fill="none">
+    <path d="M1 1h20M1 9h20M1 17h20" stroke="#252C36" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</button>
 
 <!-- Sidebar -->
 <div id="sidebar">
@@ -807,6 +932,8 @@
     <a href="https://theonehouseproject.com" target="_blank">theonehouseproject.com</a>
   </div>
 </div>
+
+<div id="sidebar-overlay"></div>
 
 <!-- Counter -->
 <div id="counter"></div>
@@ -892,7 +1019,7 @@
       <div class="eyebrow anim" style="color: var(--blue);">What One House Is</div>
       <h2 class="anim anim-d1">a coordination layer</h2>
       <p class="subtitle anim anim-d2" style="margin-bottom: 32px;">We help people and organizations stand up self-sustaining crisis housing operations by connecting them with partners, a plan, and tools.</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+      <div class="mobile-collapse" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
         <div class="card anim anim-d3" style="text-align: center;">
           <div style="width: 48px; height: 48px; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center;">
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#229AFF" stroke-width="2.5" stroke-dasharray="4 3"/><circle cx="18" cy="18" r="6" fill="#229AFF"/></svg>
@@ -1033,7 +1160,7 @@
       <div class="eyebrow anim" style="color: var(--blue);">The Partner Network</div>
       <h2 class="anim anim-d1">every house needs four things</h2>
       <p class="subtitle anim anim-d2" style="margin: 0 auto 36px; max-width: 580px;">Someone to fund it, someone to run it, a place to put it, and specialists to handle what the operator cannot. Most people who want to help only have one or two of these. Our job is to find the rest.</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;">
+      <div class="mobile-collapse" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;">
         <div style="text-align: center;" class="anim anim-d3">
           <div style="width: 52px; height: 52px; border-radius: 14px; background: var(--orange); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
             <div style="width: 24px; height: 24px; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background: var(--dark);"></div>
@@ -1312,6 +1439,25 @@
   let current = 0;
   let transitioning = false;
 
+  // Mobile sidebar toggle
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('visible');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('visible');
+  }
+
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  sidebarOverlay.addEventListener('click', closeSidebar);
+
   // Build two-level chapter + slide nav
   const colors = {
     'The Problem': '#FBAD46',
@@ -1337,7 +1483,7 @@
     }
     const btn = document.createElement('button');
     btn.textContent = title;
-    btn.addEventListener('click', () => goTo(i));
+    btn.addEventListener('click', () => { goTo(i); closeSidebar(); });
     nav.appendChild(btn);
     slideButtons.push(btn);
   });
@@ -1351,7 +1497,8 @@
     counter.textContent = `${current + 1} / ${total}`;
 
     const pct = ((current + 1) / total) * 100;
-    const containerW = window.innerWidth - 240;
+    const sidebarW = window.innerWidth > 768 ? 240 : 0;
+    const containerW = window.innerWidth - sidebarW;
     progress.style.width = `${(pct / 100) * containerW}px`;
 
     slideButtons.forEach((btn, i) => btn.classList.toggle('active', i === current));
@@ -1395,6 +1542,8 @@
       diff > 0 ? goTo(current + 1) : goTo(current - 1);
     }
   });
+
+  window.addEventListener('resize', update);
 
   update();
 })();
