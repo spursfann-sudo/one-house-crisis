@@ -806,9 +806,9 @@
     align-items: center;
     gap: 8px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(242,249,255,0.55);
+    font-size: 14px;
+    font-weight: 700;
+    color: #F2F9FF;
     letter-spacing: 0.03em;
     transition: opacity 0.5s;
     animation: hintPulse 2s ease-in-out infinite;
@@ -820,8 +820,8 @@
     animation: hintBounce 1.5s ease-in-out infinite;
   }
   @keyframes hintPulse {
-    0%, 100% { opacity: 0.55; }
-    50% { opacity: 0.9; }
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
   }
   @keyframes hintBounce {
     0%, 100% { transform: translateX(0); }
@@ -1010,11 +1010,17 @@
     #nav-hint .hint-text-mobile { display: inline; }
     #nav-hint .hint-text-desktop { display: none; }
 
-    /* Title CTAs: stack on small screens */
+    /* Title CTAs: partner full-width, secondary row below */
     .title-ctas {
       gap: 8px;
     }
-    .title-ctas a {
+    .title-ctas a.cta-primary {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+    .title-ctas a:not(.cta-primary) {
+      flex: 1 1 0;
+      text-align: center;
       font-size: 12px;
       padding: 8px 14px;
     }
@@ -1078,10 +1084,10 @@
       <div class="divider anim anim-d3" style="background: var(--blue);"></div>
       <p class="subtitle anim anim-d4">A coordination model that turns good intentions<br>into functioning crisis housing -- one house at a time.</p>
       <div class="title-ctas anim anim-d5">
-        <a href="https://givebutter.com/join-the-project" target="_blank" class="cta-primary">Donate</a>
-        <a href="https://onehouseproject.com" target="_blank">Learn More</a>
+        <a href="intake-form.html" class="cta-primary">Become a Partner</a>
+        <a href="https://givebutter.com/join-the-project" target="_blank">Donate</a>
         <a href="https://www.instagram.com/theonehouseproject/" target="_blank">Follow</a>
-        <a href="intake-form.html">Become a Partner</a>
+        <a href="https://onehouseproject.com" target="_blank">Website</a>
       </div>
     </div>
   </div>
