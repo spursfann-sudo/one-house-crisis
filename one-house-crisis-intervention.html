@@ -647,6 +647,39 @@
     margin-bottom: 16px;
   }
 
+  /* ── Title slide quick-action CTAs ── */
+  .title-ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .title-ctas a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--white);
+    padding: 10px 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .title-ctas a:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.55);
+    transform: translateY(-1px);
+  }
+  .title-ctas a.cta-primary {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .title-ctas a.cta-primary:hover {
+    background: #1a86e0;
+    border-color: #1a86e0;
+  }
+
   /* ── Pill tag ── */
   .pill {
     display: inline-block;
@@ -762,18 +795,40 @@
     display: block;
   }
 
-  /* ── Keyboard hint ── */
-  #keyboard-hint {
+  /* ── Navigation hint ── */
+  #nav-hint {
     position: fixed;
-    bottom: 20px;
-    right: 32px;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 100;
-    font-size: 11px;
-    color: rgba(91,105,114,0.4);
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(242,249,255,0.55);
     letter-spacing: 0.03em;
     transition: opacity 0.5s;
+    animation: hintPulse 2s ease-in-out infinite;
+    margin-left: calc(var(--sidebar-w) / 2);
   }
+  #nav-hint .hint-arrow {
+    display: inline-block;
+    font-size: 18px;
+    animation: hintBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 0.9; }
+  }
+  @keyframes hintBounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+  }
+  #nav-hint .hint-text-mobile { display: none; }
+  #nav-hint .hint-text-desktop { display: inline; }
 
   /* ── Progress bar ── */
   #progress {
@@ -946,8 +1001,23 @@
       padding: 4px 10px;
     }
 
-    /* Hide keyboard hint on touch devices */
-    #keyboard-hint { display: none; }
+    /* Nav hint: adjust for mobile */
+    #nav-hint {
+      margin-left: 0;
+      font-size: 12px;
+      bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+    #nav-hint .hint-text-mobile { display: inline; }
+    #nav-hint .hint-text-desktop { display: none; }
+
+    /* Title CTAs: stack on small screens */
+    .title-ctas {
+      gap: 8px;
+    }
+    .title-ctas a {
+      font-size: 12px;
+      padding: 8px 14px;
+    }
 
     /* CTA adjustments */
     .cta-box { padding: 28px 20px; }
@@ -988,8 +1058,12 @@
 <!-- Progress -->
 <div id="progress"></div>
 
-<!-- Keyboard hint -->
-<div id="keyboard-hint">Arrow keys to navigate</div>
+<!-- Navigation hint -->
+<div id="nav-hint">
+  <span class="hint-text-desktop">Arrow keys for more</span>
+  <span class="hint-text-mobile">Swipe for more</span>
+  <span class="hint-arrow">&#8594;</span>
+</div>
 
 <!-- Slides -->
 <div id="slides-container">
@@ -1003,6 +1077,12 @@
       <h1 class="anim anim-d2" style="color: var(--white);"><span class="accent-font" style="color: var(--orange);">Uniting</span> Services<br>Rebuilding <span class="accent-font" style="color: var(--orange);">Lives</span></h1>
       <div class="divider anim anim-d3" style="background: var(--blue);"></div>
       <p class="subtitle anim anim-d4">A coordination model that turns good intentions<br>into functioning crisis housing -- one house at a time.</p>
+      <div class="title-ctas anim anim-d5">
+        <a href="https://givebutter.com/join-the-project" target="_blank" class="cta-primary">Donate</a>
+        <a href="https://onehouseproject.com" target="_blank">Learn More</a>
+        <a href="https://www.instagram.com/theonehouseproject/" target="_blank">Follow</a>
+        <a href="intake-form.html">Become a Partner</a>
+      </div>
     </div>
   </div>
 
@@ -1492,7 +1572,7 @@
   const counter = document.getElementById('counter');
   const progress = document.getElementById('progress');
   const nav = document.getElementById('chapter-nav');
-  const hint = document.getElementById('keyboard-hint');
+  const hint = document.getElementById('nav-hint');
   const total = slides.length;
   let current = 0;
   let transitioning = false;
@@ -1564,6 +1644,7 @@
 
   function goTo(idx) {
     if (idx < 0 || idx >= total || idx === current || transitioning) return;
+    hideHint();
     transitioning = true;
     const dir = idx > current ? 'exit-left' : '';
     if (dir) slides[current].classList.add('exit-left');
@@ -1583,13 +1664,11 @@
   });
 
   // Hide hint after first navigation
-  let hintShown = true;
-  document.addEventListener('keydown', () => {
-    if (hintShown) {
+  function hideHint() {
+    if (hint.style.opacity !== '0') {
       hint.style.opacity = '0';
-      hintShown = false;
     }
-  }, { once: false });
+  }
 
   // Touch support
   let touchStartX = 0;
